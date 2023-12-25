@@ -15,18 +15,28 @@ import { Baby } from "lucide-react";
 import { BuiltInProviderType } from "next-auth/providers/index";
 
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
+
   const [toggleDropDown, setToggleDropDown] = useState<Boolean>(false);
   const [providers, setProviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>(null);
 
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const fetchProviders = async () => {
+      const providers = await getProviders();
+      setProviders(providers);
+    };
+    fetchProviders();
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setToggleDropDown(false);
       }
     };
@@ -36,12 +46,6 @@ const Nav = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-
-    const fetchProviders = async () => {
-      const providers = await getProviders();
-      setProviders(providers);
-    };
-    fetchProviders();
   }, []);
 
   return (
@@ -58,10 +62,10 @@ const Nav = () => {
       </Link>
 
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5 flex-center">
             <Link href="/create-prompt">
-              <button className="black_btn">Create Something</button>
+              <button className="black_btn">Create Prompt</button>
             </Link>
             <button
               onClick={() => signOut()}
@@ -71,7 +75,13 @@ const Nav = () => {
               Sign Out
             </button>
             <Link href="/profile">
-              <Baby />
+              <Image
+                src={session?.user.image || "/assets/images/profile.png"}
+                alt="profile"
+                width={30}
+                height={30}
+                className="rounded-full cursor-pointer"
+              />
             </Link>
           </div>
         ) : (
@@ -81,7 +91,9 @@ const Nav = () => {
                 <div key={provider.name}>
                   <button
                     className="outline_btn"
-                    onClick={() => signIn(provider.id)}
+                    onClick={() => {
+                      signIn(provider.id);
+                    }}
                   >
                     Sign in with {provider.name}
                   </button>
@@ -94,9 +106,14 @@ const Nav = () => {
       {/* Mobile Navigation */}
 
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
-            <Baby
+            <Image
+              src={session?.user.image || "/assets/images/profile.png"}
+              alt="profile"
+              width={30}
+              height={30}
+              className="rounded-full cursor-pointer"
               onClick={() => setToggleDropDown((prevState) => !prevState)}
             />
             {toggleDropDown && (

@@ -24,7 +24,7 @@ const PromptCard = ({
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-2 flex-col">
-        <div className="flex flex-row items-center justify-center gap-2">
+        <div className="flex w-full flex-row items-center justify-center gap-2">
           <div>
             <Image
               src={prompt.createdBy.image}
@@ -34,39 +34,46 @@ const PromptCard = ({
               className="rounded-full object-contain"
             />
           </div>
-          <h1 className="font-satoshi font-medium text-lg">
+          <h1 className="font-satoshi font-bold text-lg">
             {prompt.createdBy.username}
           </h1>
+
+          <div className="cursor-pointer ml-auto p-0.5 py-1 rounded-md hover:bg-gray-200 w-min">
+            {copied === "" ? (
+              <Clipboard
+                className="text-gray-700"
+                size={15}
+                onClick={() => {
+                  navigator.clipboard.writeText(prompt.prompt);
+                  setCopied(prompt.prompt);
+                  setTimeout(() => {
+                    setCopied("");
+                  }, 1000);
+                }}
+              />
+            ) : (
+              <ClipboardCheck
+                className=" text-gray-700"
+                size={15}
+                onClick={() => {
+                  navigator.clipboard.writeText(prompt.prompt);
+                  setCopied(prompt.prompt);
+                  setTimeout(() => {
+                    setCopied("");
+                  }, 1000);
+                }}
+              />
+            )}
+          </div>
         </div>
         <div>
           <p className="font-satoshi text-sm">{prompt.prompt}</p>
-        </div>
-      </div>
-      <div className="mt-2">
-        <div className="p-1 py-1.5 rounded-md hover:bg-gray-400 w-min">
-          {copied === "" ? (
-            <Clipboard
-              className="cursor-pointer text-gray-700"
-              onClick={() => {
-                navigator.clipboard.writeText(prompt.prompt);
-                setCopied(prompt.prompt);
-                setTimeout(() => {
-                  setCopied("");
-                }, 1000);
-              }}
-            />
-          ) : (
-            <ClipboardCheck
-              className="cursor-pointer text-gray-700"
-              onClick={() => {
-                navigator.clipboard.writeText(prompt.prompt);
-                setCopied(prompt.prompt);
-                setTimeout(() => {
-                  setCopied("");
-                }, 1000);
-              }}
-            />
-          )}
+          <p
+            className="font-satoshi text-xs text-gray-500 mt-2 cursor-pointer"
+            onClick={handleTagClick && handleTagClick(prompt.tag)}
+          >
+            {prompt.tag}
+          </p>
         </div>
       </div>
     </div>

@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require("tailwindcss/defaultTheme")
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,8 +10,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        satoshi: ["Satoshi", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        satoshi: ["Satoshi", "sans-serif", ...fontFamily.sans],
+        inter: ["Inter", "sans-serif", ...fontFamily.sans],
       },
       colors: {
         "primary-orange": "#FF5722",

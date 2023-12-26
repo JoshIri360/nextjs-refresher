@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const PromptCardList = ({
   data,
@@ -28,12 +29,14 @@ const PromptCardList = ({
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       const res = await fetch("/api/prompt");
       if (!res.ok) {
@@ -41,6 +44,7 @@ const Feed = () => {
       }
       const newData = await res.json();
       setData(newData);
+      setIsLoading(false);
     };
     fetchData();
   }, []);
@@ -58,7 +62,20 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={data} handleTagClick={() => {}} />
+      {isLoading ? (
+        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+      ) : (
+        <>
+          <div className="flex items-center space-x-4">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>{" "}
+          <PromptCardList data={data} handleTagClick={() => {}} />
+        </>
+      )}
     </section>
   );
 };

@@ -63,16 +63,31 @@ const Feed = () => {
       </form>
 
       {isLoading ? (
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
-      ) : (
-        <>
-          <div className="flex items-center space-x-4">
+        <div className="mt-16 prompt_layout">
+          <div className="flex items-center space-x-4 prompt_card">
             <Skeleton className="h-12 w-12 rounded-full" />
             <div className="space-y-2">
               <Skeleton className="h-4 w-[250px]" />
               <Skeleton className="h-4 w-[200px]" />
             </div>
-          </div>{" "}
+          </div>
+          <div className="flex items-center space-x-4 prompt_card">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+          <div className="flex items-center space-x-4 prompt_card">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
           <PromptCardList data={data} handleTagClick={() => {}} />
         </>
       )}

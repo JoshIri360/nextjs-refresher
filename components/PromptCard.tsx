@@ -69,7 +69,7 @@ const PromptCard = ({
         <div>
           <p className="font-satoshi text-sm">{prompt.prompt}</p>
           <p
-            className="font-satoshi text-xs text-gray-500 mt-2 cursor-pointer"
+            className="font-satoshi text-xs text-blue-400 hover:text-blue-500 mt-2 cursor-pointer"
             onClick={handleTagClick && handleTagClick(prompt.tag)}
           >
             {prompt.tag}

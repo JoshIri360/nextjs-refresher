@@ -17,6 +17,8 @@ const PromptCardList = ({
             key={prompt.id}
             prompt={prompt}
             handleTagClick={handleTagClick}
+            handleEdit={undefined}
+            handleDelete={undefined}
           />
         ))}
     </div>
@@ -37,12 +39,8 @@ const Feed = () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
-      if (res.headers.get("content-type")?.includes("application/json")) {
-        const data = await res.json();
-        setData(data);
-      } else {
-        console.log("Not receiving JSON");
-      }
+      const newData = await res.json();
+      setData(newData);
     };
     fetchData();
   }, []);
@@ -60,7 +58,7 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data handleTagClick={() => {}} />
+      <PromptCardList data={data} handleTagClick={() => {}} />
     </section>
   );
 };

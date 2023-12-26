@@ -23,13 +23,13 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }: FormProps) => {
       <h1 className="head_text text-left">
         <span className="blue_gradient">{type} Prompt</span>
       </h1>
-      <p className="desc text-left max-w-">
+      <p className="desc text-left">
         {type} and share prompts with the world. Let your imagination run wild!
       </p>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-7 mt-10 w-full max-w-2xl glassmorphism"
+        className="flex flex-col gap-7 my-10 w-full max-w-2xl glassmorphism"
       >
         <label htmlFor="prompt" className="text-left">
           <span className="font-satoshi font-semibold text-base text-gray-700">

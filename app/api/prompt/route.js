@@ -5,7 +5,7 @@ export const GET = async (req, res) => {
   try {
     await connectToDB();
 
-    const prompts = await Prompt.find();
+    const prompts = await Prompt.find().populate("createdBy", "image username");
 
     return new Response(JSON.stringify(prompts), {
       status: 201,

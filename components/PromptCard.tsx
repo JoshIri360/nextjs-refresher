@@ -4,7 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { Clipboard, ClipboardCheck } from "lucide-react";
+import { Session } from "next-auth";
+import { Clipboard, ClipboardCheck, Pencil, Trash2 } from "lucide-react";
+
+interface CustomSession extends Session {
+  user: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    id: string;
+  };
+}
 
 type PromptCardProps = {
   prompt: any;
@@ -20,6 +30,9 @@ const PromptCard = ({
   handleDelete,
 }: PromptCardProps) => {
   const [copied, setCopied] = useState("");
+  const session = useSession() as { data: CustomSession | null };
+  const path = usePathname();
+  const router = useRouter();
 
   return (
     <div className="prompt_card">
@@ -38,32 +51,55 @@ const PromptCard = ({
             {prompt.createdBy.username}
           </h1>
 
-          <div className="cursor-pointer ml-auto p-0.5 py-1 rounded-md hover:bg-gray-200 w-min">
-            {copied === "" ? (
-              <Clipboard
-                className="text-gray-700"
-                size={15}
-                onClick={() => {
-                  navigator.clipboard.writeText(prompt.prompt);
-                  setCopied(prompt.prompt);
-                  setTimeout(() => {
-                    setCopied("");
-                  }, 1000);
-                }}
-              />
+          <div className="ml-auto flex flex-center">
+            {prompt.createdBy._id === session.data?.user?.id &&
+            path === "/profile" ? (
+              <>
+                <div className="cursor-pointer rounded-md hover:bg-blue-200">
+                  <Pencil
+                    className="text-blue-500 p-0.5 py-1"
+                    size={23}
+                    onClick={handleEdit && handleEdit(prompt._id)}
+                  />
+                </div>
+                <div className="cursor-pointer rounded-md hover:bg-red-200">
+                  <Trash2
+                    className="text-red-500 p-0.5 py-1"
+                    size={23}
+                    onClick={handleDelete && handleDelete(prompt._id)}
+                  />
+                </div>
+              </>
             ) : (
-              <ClipboardCheck
-                className=" text-gray-700"
-                size={15}
-                onClick={() => {
-                  navigator.clipboard.writeText(prompt.prompt);
-                  setCopied(prompt.prompt);
-                  setTimeout(() => {
-                    setCopied("");
-                  }, 1000);
-                }}
-              />
+              <></>
             )}
+            <div className="cursor-pointer rounded-md hover:bg-gray-200">
+              {copied === "" ? (
+                <Clipboard
+                  className="text-gray-700 p-0.5 py-1"
+                  size={23}
+                  onClick={() => {
+                    navigator.clipboard.writeText(prompt.prompt);
+                    setCopied(prompt.prompt);
+                    setTimeout(() => {
+                      setCopied("");
+                    }, 1000);
+                  }}
+                />
+              ) : (
+                <ClipboardCheck
+                  className=" text-gray-700 p-0.5 py-1"
+                  size={23}
+                  onClick={() => {
+                    navigator.clipboard.writeText(prompt.prompt);
+                    setCopied(prompt.prompt);
+                    setTimeout(() => {
+                      setCopied("");
+                    }, 1000);
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div>

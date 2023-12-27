@@ -12,7 +12,7 @@ interface CustomSession extends Session {
     name?: string | null;
     email?: string | null;
     image?: string | null;
-    id: string; // Add the id property
+    id: string;
   };
 }
 

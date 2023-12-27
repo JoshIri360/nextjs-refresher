@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import PromptCard from "./PromptCard";
 
 interface ProfileProps {
   name: string;
@@ -23,18 +24,13 @@ const Profile = ({
       <div className="mt-16 prompt_layout">
         {Array.isArray(data) &&
           data.map((prompt: any) => (
-            <div key={prompt.id} className="prompt_card">
-              <h1>{prompt.createdBy.username}</h1>
-              <p>{prompt.prompt}</p>
-              <p>{prompt.tags}</p>
-              <Image
-                src={prompt.createdBy.image}
-                alt="User Image"
-                width={30}
-                height={30}
-              />
-              <h1>{prompt.createdBy.id}</h1>
-            </div>
+            <PromptCard
+              key={prompt._id}
+              prompt={prompt}
+              handleTagClick={undefined}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
           ))}
       </div>
     </div>

@@ -60,7 +60,7 @@ const MyProfile = () => {
       }
     };
     fetchData();
-  }, [session?.user.id]);
+  }, [session]);
 
   return (
     <Profile

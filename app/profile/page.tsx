@@ -22,7 +22,7 @@ const MyProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession() as { data: CustomSession | null };
   const handleEdit = () => {
-    router.push("/create-prompt");
+    router.push("/edit-prompt");
   };
   const handleDelete = async (id: string) => {
     try {

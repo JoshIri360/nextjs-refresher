@@ -41,7 +41,6 @@ const MyProfile = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log(session);
     const fetchData = async () => {
       try {
         const res = await fetch(`/api/users/${session?.user.id}/posts`);
@@ -59,7 +58,7 @@ const MyProfile = () => {
         setIsLoading(false);
       }
     };
-    fetchData();
+    if (session) fetchData();
   }, [session]);
 
   return (

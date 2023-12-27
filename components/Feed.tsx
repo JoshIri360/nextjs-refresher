@@ -15,7 +15,7 @@ const PromptCardList = ({
       {Array.isArray(data) &&
         data.map((prompt: any) => (
           <PromptCard
-            key={prompt.id}
+            key={prompt._id}
             prompt={prompt}
             handleTagClick={handleTagClick}
             handleEdit={undefined}

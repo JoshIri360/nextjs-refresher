@@ -59,14 +59,18 @@ const PromptCard = ({
                   <Pencil
                     className="text-blue-500 p-0.5 py-1"
                     size={23}
-                    onClick={handleEdit && handleEdit(prompt._id)}
+                    onClick={() => {
+                      handleEdit(prompt._id);
+                    }}
                   />
                 </div>
                 <div className="cursor-pointer rounded-md hover:bg-red-200">
                   <Trash2
                     className="text-red-500 p-0.5 py-1"
                     size={23}
-                    onClick={handleDelete && handleDelete(prompt._id)}
+                    onClick={() => {
+                      handleDelete(prompt._id);
+                    }}
                   />
                 </div>
               </>

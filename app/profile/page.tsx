@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import Profile from "@components/Profile";
 import { Session } from "next-auth";
@@ -17,17 +17,31 @@ interface CustomSession extends Session {
 }
 
 const MyProfile = () => {
+  const router = useRouter();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession() as { data: CustomSession | null };
-  const handleEdit = () => {};
-  const handleDelete = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: string
-  ) => {};
+  const handleEdit = () => {
+    router.push("/create-prompt");
+  };
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/prompt/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const newData = await res.json();
+      setData(newData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
+    console.log(session);
     const fetchData = async () => {
       try {
         const res = await fetch(`/api/users/${session?.user.id}/posts`);
@@ -38,9 +52,7 @@ const MyProfile = () => {
 
         const newData = await res.json();
 
-        if (session?.user.id) {
-          setData(newData);
-        }
+        setData(newData);
       } catch (error) {
         console.log(error);
       } finally {

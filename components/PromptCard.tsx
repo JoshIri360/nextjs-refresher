@@ -60,7 +60,8 @@ const PromptCard = ({
                     className="text-blue-500 p-0.5 py-1"
                     size={23}
                     onClick={() => {
-                      handleEdit(prompt._id);
+                      console.log(prompt);
+                      handleEdit(prompt);
                     }}
                   />
                 </div>

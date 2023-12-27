@@ -74,8 +74,6 @@ export const PATCH = async (req, { params }) => {
 };
 
 export const DELETE = async (req, { params }) => {
-  console.log("params", params);
-
   try {
     await connectToDB();
 

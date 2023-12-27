@@ -19,8 +19,6 @@ const EditPost = () => {
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
-  console.log(promptId);
-
   const [post, setPost] = useState({ prompt: "", tag: "" });
   const [submitting, setIsSubmitting] = useState(false);
 

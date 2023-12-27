@@ -21,8 +21,9 @@ const MyProfile = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession() as { data: CustomSession | null };
-  const handleEdit = () => {
-    router.push("/edit-prompt");
+  const handleEdit = (post: any) => {
+    console.log(post);
+    router.push(`/edit-prompt?id=${post._id}`);
   };
   const handleDelete = async (id: string) => {
     try {

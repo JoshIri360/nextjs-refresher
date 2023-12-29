@@ -6,10 +6,10 @@ export const GET = async (req, { params }) => {
   try {
     await connectToDB();
 
-    console.log(params.searchText);
+    console.log(params);
 
     const prompt = await Prompt.find({
-      prompt: { $regex: params.searchText, $options: "i" },
+      prompt: { $regex: params.id, $options: "i" },
     }).populate("createdBy", "image username");
 
     if (!prompt) {

@@ -11,7 +11,6 @@ const page = () => {
       <p className="desc text-center">
         Promptopia is a place to discover and share AI prompts.
       </p>
-
       <Feed />
     </section>
   );

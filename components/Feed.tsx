@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Search } from "lucide-react";
 
 const PromptCardList = ({
   data,
@@ -35,6 +36,20 @@ const Feed = () => {
     setSearchText(e.target.value);
   };
 
+  const handleSearch = async (searchText: String) => {
+    try {
+      const res = await fetch(`/api/prompt/search?searchText=${searchText}`);
+      console.log(res);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const newData = await res.json();
+      setData(newData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -60,6 +75,15 @@ const Feed = () => {
           required
           className="block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-2 focus:border-black focus:outline-none focus:ring-0;"
         />
+        <button
+          className="ml-2 h-9 glassmorphism p-1 cursor-pointer border rounded-md border-gray-200"
+          onClick={() => {
+            console.log("Search clicked");
+            handleSearch(searchText);
+          }}
+        >
+          <Search className="w-15 h-15 text-gray-500" />
+        </button>
       </form>
 
       {isLoading ? (

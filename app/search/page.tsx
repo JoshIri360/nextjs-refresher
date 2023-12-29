@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import PromptCard from "./PromptCard";
+import PromptCard from "@/components/PromptCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Search } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const PromptCardList = ({
@@ -33,6 +34,8 @@ const Feed = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const search = searchParams.get("query");
 
   const handleSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -45,7 +48,7 @@ const Feed = () => {
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
-      const res = await fetch("/api/prompt");
+      const res = await fetch(`/api/prompt/search/${search}`);
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }

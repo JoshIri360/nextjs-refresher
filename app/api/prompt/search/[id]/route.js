@@ -2,8 +2,11 @@ import { connectToDB } from "@utils/database";
 import Prompt from "@models/prompt";
 
 export const GET = async (req, { params }) => {
+  console.log("Here");
   try {
     await connectToDB();
+
+    console.log(params.searchText);
 
     const prompt = await Prompt.find({
       prompt: { $regex: params.searchText, $options: "i" },

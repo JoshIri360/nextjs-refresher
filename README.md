@@ -1,6 +1,8 @@
 # Next.js Refresher
 
-This project is a refresher on [Next.js](https://nextjs.org/), a popular React framework for building web applications. It's bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project is a refresher on [Next.js](https://nextjs.org/), a popular React framework for building web applications. It involves building Promptopia.
+![image](https://github.com/JoshIri360/nextjs-refresher/assets/91752742/5155d058-c3a3-4dc5-b104-66a466146bd2)
+
 
 ## Project Structure
 

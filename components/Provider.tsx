@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 
 type ProviderProps = {
-  session: any;
+  session?: any; // session is now optional
   children: ReactNode;
 };
 

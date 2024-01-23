@@ -5,6 +5,13 @@ const nextConfig = {
   },
   images: {
     domains: ["lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        port: '',
+      }
+    ]
   },
   webpack(config) {
     config.experiments = {
